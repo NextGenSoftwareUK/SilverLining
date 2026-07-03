@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Silver Lining — Find the Positive | OASIS Omniverse</title>
+<meta name="description" content="Silver Lining — share your challenges, discover positive perspectives and earn karma for helping others find solutions. Every cloud has one.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌤️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080f;
+  --silver:#c8d8f0;
+  --silver2:#e0ecff;
+  --gold:#f0c840;
+  --gold2:#ffe080;
+  --blue:#4090e0;
+  --lavender:#a080d8;
+  --heading:#ddeeff;
+  --text:#a8bfd8;
+  --border:rgba(200,216,240,.15);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,8,15,.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(200,216,240,.08)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center}
+.nav-logo{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;letter-spacing:.12em;color:var(--silver);text-decoration:none;white-space:nowrap}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:28px;margin-left:36px}
+.nav-links a{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--text);text-decoration:none;opacity:.7;transition:opacity .2s,color .2s}
+.nav-links a:hover{opacity:1;color:var(--silver)}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.nav-cta{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--bg);background:var(--silver);border:none;padding:9px 18px;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;font-weight:700;transition:background .2s}
+.nav-cta:hover{background:var(--silver2)}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;overflow:hidden;z-index:1}
+.hero-bg-glow{position:absolute;inset:0;background:radial-gradient(ellipse 65% 50% at 50% 38%,rgba(200,216,240,.05),transparent 65%),radial-gradient(ellipse 35% 30% at 20% 70%,rgba(240,200,64,.04),transparent 60%),radial-gradient(ellipse 30% 25% at 80% 65%,rgba(160,128,216,.04),transparent 60%);pointer-events:none}
+
+/* Cloud animation */
+.cloud-wrap{width:260px;height:160px;margin:0 auto 28px;position:relative}
+.cloud-svg{width:100%;height:100%;overflow:visible}
+@keyframes cloudFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes liningGlow{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes rayExtend{0%,100%{transform:scaleY(.85);opacity:.3}50%{transform:scaleY(1.15);opacity:.7}}
+
+.hero-eyebrow{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.28em;color:var(--silver);margin-bottom:18px;opacity:.8}
+.hero-title{font-family:'Orbitron',sans-serif;font-size:clamp(36px,6.5vw,78px);font-weight:900;letter-spacing:.04em;color:var(--heading);line-height:1.0;margin-bottom:12px;text-shadow:0 0 50px rgba(200,216,240,.15)}
+.hero-subtitle{font-family:'Orbitron',sans-serif;font-size:clamp(11px,1.8vw,15px);font-weight:600;letter-spacing:.22em;color:var(--gold);margin-bottom:24px;opacity:.9}
+.hero-desc{font-size:clamp(15px,2.2vw,18px);color:var(--text);max-width:640px;margin:0 auto 36px;line-height:1.8}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px}
+.hero-badge{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.18em;padding:6px 14px;border-radius:20px;background:rgba(200,216,240,.06);border:1px solid rgba(200,216,240,.18);color:var(--silver)}
+.hero-badge.gold{background:rgba(240,200,64,.07);border-color:rgba(240,200,64,.22);color:var(--gold)}
+.hero-badge.lavender{background:rgba(160,128,216,.07);border-color:rgba(160,128,216,.22);color:var(--lavender)}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--bg);background:linear-gradient(135deg,var(--silver),var(--blue));border:none;padding:14px 28px;border-radius:8px;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,216,240,.2)}
+.btn-secondary{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--silver);background:transparent;border:1px solid rgba(200,216,240,.3);padding:14px 28px;border-radius:8px;cursor:pointer;text-decoration:none;transition:border-color .2s,background .2s}
+.btn-secondary:hover{border-color:var(--silver);background:rgba(200,216,240,.05)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* SECTIONS */
+.section{position:relative;z-index:1;padding:88px 24px}
+.section-kicker{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.26em;color:var(--silver);text-align:center;margin-bottom:14px}
+.section-kicker.gold{color:var(--gold)}
+.section-kicker.lavender{color:var(--lavender)}
+.section-title{font-family:'Orbitron',sans-serif;font-size:clamp(22px,4vw,40px);font-weight:900;letter-spacing:.06em;color:var(--heading);text-align:center;margin-bottom:10px}
+.section-line{display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--silver),transparent);margin:0 auto 32px}
+.section-line.gold{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.section-line.lavender{background:linear-gradient(90deg,transparent,var(--lavender),transparent)}
+.section-sub{font-size:17px;color:var(--text);text-align:center;max-width:680px;margin:0 auto 52px;line-height:1.75}
+
+/* CARD BASE */
+.card{background:linear-gradient(135deg,rgba(12,18,36,.95),rgba(4,6,16,.98));border:1px solid var(--border);border-radius:18px;padding:30px 28px}
+.card.gold{border-color:rgba(240,200,64,.18)}
+.card.lavender{border-color:rgba(160,128,216,.18)}
+.card.blue{border-color:rgba(64,144,224,.18)}
+
+/* HOW IT WORKS */
+.how-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:20px;max-width:1080px;margin:0 auto}
+.step-num{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900;color:rgba(200,216,240,.12);line-height:1;margin-bottom:12px}
+.step-icon{font-size:30px;margin-bottom:10px}
+.step-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:800;color:var(--heading);margin-bottom:8px;letter-spacing:.04em}
+.step-desc{font-size:14px;color:var(--text);line-height:1.7}
+
+/* CHALLENGE FEED MOCKUP */
+.feed-wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.feed-item{background:linear-gradient(135deg,rgba(12,18,36,.95),rgba(4,6,16,.98));border:1px solid var(--border);border-radius:16px;padding:22px 24px}
+.feed-item.answered{border-color:rgba(240,200,64,.22)}
+.feed-tag{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.18em;margin-bottom:8px}
+.feed-tag.open{color:var(--silver);opacity:.7}
+.feed-tag.answered{color:var(--gold)}
+.feed-challenge{font-size:15px;color:var(--heading);line-height:1.6;margin-bottom:10px}
+.feed-lining{font-size:14px;color:#c8e8d8;line-height:1.6;font-style:italic;padding:10px 14px;background:rgba(200,240,216,.04);border-left:2px solid rgba(200,216,240,.3);border-radius:0 8px 8px 0}
+.feed-meta{display:flex;align-items:center;gap:16px;margin-top:10px;flex-wrap:wrap}
+.feed-karma{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.1em}
+.feed-count{font-size:13px;color:var(--text);opacity:.7}
+
+/* KARMA BAND */
+.karma-band{background:linear-gradient(135deg,rgba(240,200,64,.04),rgba(160,128,216,.03));border-top:1px solid rgba(240,200,64,.1);border-bottom:1px solid rgba(240,200,64,.1);padding:72px 24px;position:relative;z-index:1}
+.karma-eg-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:36px}
+.karma-eg{background:rgba(240,200,64,.05);border:1px solid rgba(240,200,64,.12);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.karma-eg-icon{font-size:20px}
+.karma-eg-text{font-size:14px;color:var(--text)}
+.karma-eg-pts{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);margin-left:auto;white-space:nowrap}
+
+/* OASIS BAND */
+.oasis-band{background:linear-gradient(135deg,rgba(200,216,240,.03),rgba(160,128,216,.02));border-top:1px solid rgba(200,216,240,.08);border-bottom:1px solid rgba(200,216,240,.08);padding:72px 24px;position:relative;z-index:1}
+
+/* PILLS */
+.pill-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:32px}
+.pill{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.18em;padding:7px 16px;border-radius:20px;background:rgba(200,216,240,.05);border:1px solid rgba(200,216,240,.14);color:var(--silver)}
+.pill.gold{background:rgba(240,200,64,.05);border-color:rgba(240,200,64,.16);color:var(--gold)}
+.pill.lavender{background:rgba(160,128,216,.05);border-color:rgba(160,128,216,.16);color:var(--lavender)}
+
+/* QUOTE */
+.quote-band{padding:64px 24px;position:relative;z-index:1;text-align:center}
+.quote-inner{max-width:780px;margin:0 auto}
+
+/* FOOTER */
+footer{position:relative;z-index:1;background:rgba(6,8,15,.95);border-top:1px solid rgba(200,216,240,.08);padding:48px 24px 36px}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start}
+.footer-brand{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;color:var(--silver);letter-spacing:.1em;margin-bottom:10px}
+.footer-sub{font-size:14px;color:#a8bfd8;line-height:1.6;max-width:400px}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.footer-links a{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.15em;color:#a8bfd8;text-decoration:none;opacity:.7;transition:opacity .2s,color .2s}
+.footer-links a:hover{opacity:1;color:var(--silver)}
+.footer-copy{text-align:center;font-size:12px;color:#a8bfd8;opacity:.4;margin-top:32px;border-top:1px solid rgba(200,216,240,.06);padding-top:24px}
+
+@media(max-width:700px){
+  .nav-links{display:none}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-links{justify-content:flex-start}
+}
+@media(max-width:520px){
+  .section{padding:64px .75rem}
+}
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://oasisomniverse.one">OASIS <span>OMNIVERSE</span></a>
+    <div class="nav-links">
+      <a href="#how">HOW IT WORKS</a>
+      <a href="#feed">COMMUNITY</a>
+      <a href="#karma">KARMA</a>
+      <a href="#oasis">OASIS</a>
+    </div>
+    <div class="nav-right" id="nav-right">
+      <a class="nav-cta" href="https://oasisomniverse.one">OASIS OMNIVERSE</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Animated cloud with silver lining -->
+  <div class="cloud-wrap">
+    <svg class="cloud-svg" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+        <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- sun rays behind cloud -->
+      <g style="transform-origin:130px 155px;animation:rayExtend 6s ease-in-out infinite">
+        <line x1="130" y1="155" x2="65"  y2="10"  stroke="rgba(240,200,64,.18)" stroke-width="2"/>
+        <line x1="130" y1="155" x2="100" y2="5"   stroke="rgba(240,200,64,.22)" stroke-width="2"/>
+        <line x1="130" y1="155" x2="130" y2="2"   stroke="rgba(240,200,64,.25)" stroke-width="2.5"/>
+        <line x1="130" y1="155" x2="160" y2="5"   stroke="rgba(240,200,64,.22)" stroke-width="2"/>
+        <line x1="130" y1="155" x2="195" y2="10"  stroke="rgba(240,200,64,.18)" stroke-width="2"/>
+        <line x1="130" y1="155" x2="225" y2="25"  stroke="rgba(240,200,64,.12)" stroke-width="1.5"/>
+        <line x1="130" y1="155" x2="35"  y2="25"  stroke="rgba(240,200,64,.12)" stroke-width="1.5"/>
+      </g>
+      <!-- cloud body -->
+      <g style="animation:cloudFloat 6s ease-in-out infinite">
+        <ellipse cx="130" cy="100" rx="90" ry="42" fill="rgba(160,180,220,.12)" filter="url(#soft)"/>
+        <ellipse cx="130" cy="98"  rx="88" ry="40" fill="rgba(140,165,210,.1)"/>
+        <ellipse cx="90"  cy="88"  rx="42" ry="36" fill="rgba(150,172,218,.1)"/>
+        <ellipse cx="165" cy="85"  rx="38" ry="32" fill="rgba(148,170,215,.1)"/>
+        <ellipse cx="130" cy="80"  rx="52" ry="38" fill="rgba(155,178,222,.1)"/>
+        <!-- silver lining -->
+        <path d="M42,108 Q130,145 218,108" fill="none" stroke="rgba(200,216,240,.7)" stroke-width="2.5" filter="url(#glow)" style="animation:liningGlow 6s ease-in-out infinite"/>
+        <path d="M42,108 Q130,145 218,108" fill="none" stroke="rgba(240,200,64,.35)" stroke-width="1" style="animation:liningGlow 6s ease-in-out infinite .5s"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-eyebrow">COMMUNITY SUPPORT · OASIS OMNIVERSE</div>
+  <h1 class="hero-title">SILVER LINING</h1>
+  <div class="hero-subtitle">EVERY CLOUD HAS ONE</div>
+  <p class="hero-desc">Share your challenges. Discover positive perspectives. Earn karma for helping others find the light on the other side. Silver Lining turns the hardest moments into the most powerful opportunities for collective wisdom and growth.</p>
+
+  <div class="hero-badges">
+    <span class="hero-badge">SHARE CHALLENGES</span>
+    <span class="hero-badge">FIND PERSPECTIVES</span>
+    <span class="hero-badge gold">EARN KARMA</span>
+    <span class="hero-badge gold">HELP OTHERS</span>
+    <span class="hero-badge lavender">OASIS INTEGRATED</span>
+    <span class="hero-badge lavender">COMMUNITY WISDOM</span>
+  </div>
+
+  <div class="hero-actions">
+    <a href="#how" class="btn-primary">FIND YOUR LINING</a>
+    <a href="https://oasisomniverse.one" target="_blank" class="btn-secondary">OASIS OMNIVERSE</a>
+  </div>
+</section>
+
+<!-- WHAT IS SILVER LINING -->
+<section class="section" id="about" style="background:rgba(255,255,255,.003)">
+  <div class="section-kicker">THE IDEA</div>
+  <h2 class="section-title">TURN CHALLENGES INTO WISDOM</h2>
+  <span class="section-line"></span>
+  <p class="section-sub">We all go through hard times. Silver Lining is a safe, supportive space where you can share what you're facing — and discover that someone else has already found the light on the other side of it.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:20px;max-width:960px;margin:0 auto">
+    <div class="card reveal">
+      <div style="font-size:28px;margin-bottom:12px">☁️</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:800;color:var(--heading);margin-bottom:10px">SHARE YOUR CLOUD</div>
+      <p style="font-size:14px;color:var(--text);line-height:1.7">Post a challenge you're facing — big or small. A health scare, a job loss, a relationship breakdown, a creative block. No judgement. No pressure. The community receives it with compassion and offers the positive perspective they found when they faced something similar.</p>
+    </div>
+    <div class="card reveal gold">
+      <div style="font-size:28px;margin-bottom:12px">🌤️</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:800;color:var(--heading);margin-bottom:10px">DISCOVER THE LINING</div>
+      <p style="font-size:14px;color:var(--text);line-height:1.7">Every response is a silver lining — a genuine positive reframe, a practical solution, a story of how someone else got through the same thing. Responses are rated by the community, rising to the top based on how helpful and uplifting they genuinely are.</p>
+    </div>
+    <div class="card reveal lavender">
+      <div style="font-size:28px;margin-bottom:12px">⚡</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:800;color:var(--heading);margin-bottom:10px">EARN KARMA FOR HELPING</div>
+      <p style="font-size:14px;color:var(--text);line-height:1.7">Every lining you offer that helps someone earns karma — and it carries directly into your OASIS avatar. The more your perspective genuinely helps people, the more your karma grows. Kindness has power here in the most literal sense possible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-kicker gold">THE FLOW</div>
+  <h2 class="section-title">HOW IT WORKS</h2>
+  <span class="section-line gold"></span>
+  <p class="section-sub">Simple, human and kind. Silver Lining keeps it that way by design.</p>
+
+  <div class="how-grid">
+    <div class="card reveal">
+      <div class="step-num">01</div>
+      <div class="step-icon">✍️</div>
+      <div class="step-title">POST YOUR CHALLENGE</div>
+      <div class="step-desc">Write what you're going through. Tag it by category — health, relationships, work, creativity, grief, uncertainty, change. The more honest you are, the more specific and useful the community response will be.</div>
+    </div>
+    <div class="card reveal gold">
+      <div class="step-num">02</div>
+      <div class="step-icon">👥</div>
+      <div class="step-title">COMMUNITY RESPONDS</div>
+      <div class="step-desc">Others who've faced something similar offer their silver lining — the positive perspective, the lesson, the unexpected gift that came from their hardest moment. Every response is anonymous by default if the poster chooses.</div>
+    </div>
+    <div class="card reveal">
+      <div class="step-num">03</div>
+      <div class="step-icon">⭐</div>
+      <div class="step-title">RATE THE LININGS</div>
+      <div class="step-desc">The person who posted — and the wider community — can rate each response. The most genuinely helpful linings rise to the top. Shallow or unhelpful responses sink. Quality is rewarded, not just quantity.</div>
+    </div>
+    <div class="card reveal lavender">
+      <div class="step-num">04</div>
+      <div class="step-icon">⚡</div>
+      <div class="step-title">KARMA IS AWARDED</div>
+      <div class="step-desc">When your lining is rated helpful by the person who posted, you earn karma. The higher the rating, the more karma you earn. Top-rated linings earn bonus karma from the community vote on top. Every act of genuine kindness accumulates.</div>
+    </div>
+    <div class="card reveal">
+      <div class="step-num">05</div>
+      <div class="step-icon">🌍</div>
+      <div class="step-title">CARRY IT EVERYWHERE</div>
+      <div class="step-desc">Your karma score carries directly into every OASIS game and app. The kindness you show here makes your avatar stronger in Our World, One World, ODOOM and OQUAKE. Compassion is power in the OASIS Omniverse.</div>
+    </div>
+    <div class="card reveal gold">
+      <div class="step-num">06</div>
+      <div class="step-icon">🗺️</div>
+      <div class="step-title">MATCHED ON THE MAP</div>
+      <div class="step-desc">In Our World, Silver Lining challenges and solutions are visible on the map as coloured nodes — red for challenges, green for solutions. Matching them in the real world (meeting someone in your area who needs help you can offer) earns massive bonus karma.</div>
+    </div>
+    <div class="card reveal">
+      <div class="step-num">07</div>
+      <div class="step-icon">🔥</div>
+      <div class="step-title">STREAK REWARDS</div>
+      <div class="step-desc">Help someone every day and build a helping streak. Seven consecutive days of offering a genuine lining earns a streak bonus on top of your normal karma. The longer the streak, the more the community notices — your profile gains a visible streak aura others can see.</div>
+    </div>
+    <div class="card reveal lavender">
+      <div class="step-num">08</div>
+      <div class="step-icon">🌱</div>
+      <div class="step-title">WATCH YOURSELF GROW</div>
+      <div class="step-desc">Your OPORTAL dashboard tracks everything — total linings given, challenges helped, your community helpfulness rating, and your karma earned from Silver Lining over time. Watch your impact compound as your practice of kindness deepens.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY FEED MOCKUP -->
+<section class="section" id="feed" style="background:rgba(255,255,255,.003)">
+  <div class="section-kicker lavender">COMMUNITY</div>
+  <h2 class="section-title">EVERY CLOUD HAS A LINING</h2>
+  <span class="section-line lavender"></span>
+  <p class="section-sub">A glimpse at the kind of wisdom the Silver Lining community shares every day.</p>
+
+  <div class="feed-wrap">
+
+    <div class="feed-item reveal answered">
+      <div class="feed-tag answered">☀️ LINING FOUND · RELATIONSHIPS</div>
+      <div class="feed-challenge">"My relationship of six years ended suddenly and I don't know who I am without it."</div>
+      <div class="feed-lining">"That emptiness is actually you — cleared of someone else's needs for the first time in years. I found the version of myself I'd forgotten existed in the quiet after my own breakup. It was the beginning of everything good that came next."</div>
+      <div class="feed-meta">
+        <span class="feed-karma">+85 karma awarded</span>
+        <span class="feed-count">23 people found this helpful</span>
+      </div>
+    </div>
+
+    <div class="feed-item reveal answered">
+      <div class="feed-tag answered">☀️ LINING FOUND · WORK</div>
+      <div class="feed-challenge">"I was made redundant after eight years at the same company. I'm terrified."</div>
+      <div class="feed-lining">"Being forced out of somewhere safe was the only way I ever would have started my own thing. A year later I earn more, work less and genuinely like Mondays. The redundancy was the best thing that ever happened to my career — I just couldn't see it yet."</div>
+      <div class="feed-meta">
+        <span class="feed-karma">+110 karma awarded</span>
+        <span class="feed-count">41 people found this helpful</span>
+      </div>
+    </div>
+
+    <div class="feed-item reveal">
+      <div class="feed-tag open">☁️ OPEN · HEALTH</div>
+      <div class="feed-challenge">"I've been diagnosed with something chronic and I'm struggling to accept that my life won't look the way I planned."</div>
+      <div class="feed-meta" style="margin-top:8px">
+        <span class="feed-count">14 linings offered so far</span>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--silver);opacity:.6;margin-left:auto">SHARE YOUR LINING →</span>
+      </div>
+    </div>
+
+    <div class="feed-item reveal answered">
+      <div class="feed-tag answered">☀️ LINING FOUND · CREATIVITY</div>
+      <div class="feed-challenge">"I've been working on my game for ten years with no funding, no team, just me. Some days I wonder if it's worth it."</div>
+      <div class="feed-lining">"The depth you build in isolation is impossible to manufacture any other way. Everything you're building alone is yours completely — the vision is uncorrupted. When it launches, nobody will be able to say they built it but you. Keep going."</div>
+      <div class="feed-meta">
+        <span class="feed-karma">+200 karma awarded</span>
+        <span class="feed-count">97 people found this helpful</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- KARMA BAND -->
+<div class="karma-band" id="karma">
+  <div style="max-width:960px;margin:0 auto;text-align:center">
+    <div class="section-kicker gold" style="text-align:center;margin-bottom:14px">THE REWARD</div>
+    <h2 class="section-title">KINDNESS EARNS KARMA</h2>
+    <span class="section-line gold" style="display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 20px"></span>
+    <p style="font-size:16px;color:var(--text);max-width:680px;margin:0 auto 8px;line-height:1.75">Every act of genuine support in Silver Lining feeds directly into the OASIS karma engine — the same score that shapes your avatar, aura and abilities across every OASIS game and app.</p>
+    <div class="karma-eg-row reveal">
+      <div class="karma-eg"><div class="karma-eg-icon">💬</div><div class="karma-eg-text">Offer a lining</div><div class="karma-eg-pts">+10 karma</div></div>
+      <div class="karma-eg"><div class="karma-eg-icon">⭐</div><div class="karma-eg-text">Lining rated helpful</div><div class="karma-eg-pts">+25 karma</div></div>
+      <div class="karma-eg"><div class="karma-eg-icon">🌟</div><div class="karma-eg-text">Top-rated lining</div><div class="karma-eg-pts">+75 karma</div></div>
+      <div class="karma-eg"><div class="karma-eg-icon">🤝</div><div class="karma-eg-text">Real-world match</div><div class="karma-eg-pts">+150 karma</div></div>
+      <div class="karma-eg"><div class="karma-eg-icon">🔥</div><div class="karma-eg-text">7-day helping streak</div><div class="karma-eg-pts">+100 karma</div></div>
+      <div class="karma-eg"><div class="karma-eg-icon">💝</div><div class="karma-eg-text">Challenge marked resolved</div><div class="karma-eg-pts">+50 bonus</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-band">
+  <div class="quote-inner reveal">
+    <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--silver);margin-bottom:20px">DAVID ELLAMS — CREATOR</div>
+    <p style="font-size:19px;color:#d8e8f8;line-height:1.85;font-style:italic;margin-bottom:20px">"I went through enough hard times building OASIS that I know exactly what it feels like to wonder if the struggle is worth it. Silver Lining is the app I wish had existed during those years. Sometimes you just need someone who's already been through it to say: there is a lining. And here's where I found it."</p>
+    <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--text);opacity:.5">PART OF THE OASIS OMNIVERSE</div>
+  </div>
+</div>
+
+<!-- OASIS INTEGRATION -->
+<div class="oasis-band" id="oasis">
+  <div style="max-width:960px;margin:0 auto;text-align:center">
+    <div class="section-kicker" style="text-align:center">OASIS OMNIVERSE</div>
+    <h2 class="section-title">COMPASSION IS POWER</h2>
+    <span class="section-line" style="display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--silver),transparent);margin:0 auto 32px"></span>
+    <p style="font-size:16px;color:var(--text);max-width:680px;margin:0 auto 44px;line-height:1.75">Silver Lining doesn't sit in isolation — every lining you offer, every challenge you help resolve, feeds directly into your OASIS karma score and shapes your presence across every game and app in the omniverse.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:16px;max-width:900px;margin:0 auto 40px">
+      <div class="reveal" style="background:rgba(200,216,240,.03);border:1px solid rgba(200,216,240,.1);border-radius:12px;padding:20px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:800;color:var(--heading);margin-bottom:6px">OUR WORLD</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.5">Challenges and solutions appear as map nodes. Match them in real life — meet someone in your area and help them — for massive karma rewards.</div>
+      </div>
+      <div class="reveal" style="background:rgba(240,200,64,.03);border:1px solid rgba(240,200,64,.12);border-radius:12px;padding:20px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:800;color:var(--heading);margin-bottom:6px">BE MINDFUL</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.5">After resolving a challenge, Be Mindful suggests a meditation or breathing session to integrate the shift. Completing it earns a bonus karma multiplier.</div>
+      </div>
+      <div class="reveal" style="background:rgba(160,128,216,.03);border:1px solid rgba(160,128,216,.12);border-radius:12px;padding:20px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:800;color:var(--heading);margin-bottom:6px">SILVER LINING</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.5">Your top-rated linings appear as a wisdom gallery on your OASIS profile — visible to anyone who views your avatar across the omniverse.</div>
+      </div>
+      <div class="reveal" style="background:rgba(200,216,240,.03);border:1px solid rgba(200,216,240,.1);border-radius:12px;padding:20px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:800;color:var(--heading);margin-bottom:6px">OPORTAL</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.5">Track your impact — total challenges helped, karma earned from linings, community rating and helping streak — all in your OPORTAL dashboard.</div>
+      </div>
+    </div>
+
+    <a href="https://oasisomniverse.one" target="_blank" class="btn-primary" style="display:inline-block">EXPLORE THE OASIS OMNIVERSE</a>
+
+    <div class="pill-row">
+      <span class="pill">Web4 Avatar SSO</span>
+      <span class="pill gold">OASIS Karma Engine</span>
+      <span class="pill lavender">Our World Map Nodes</span>
+      <span class="pill">Be Mindful Integration</span>
+      <span class="pill gold">HyperDrive</span>
+      <span class="pill lavender">Community Ratings</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">SILVER LINING</div>
+      <p class="footer-sub">Share your challenges. Discover positive perspectives. Earn karma for helping others find the light. Every cloud has a silver lining — Silver Lining helps you find it.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://oasisomniverse.one" target="_blank">OASIS OMNIVERSE</a>
+      <a href="https://ourworldthegame.com" target="_blank">OUR WORLD</a>
+      <a href="https://oportal.oasisomniverse.one" target="_blank">OPORTAL</a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 NextGen Software / David Ellams · Silver Lining · Part of the OASIS Omniverse · All rights reserved</div>
+</footer>
+
+<script type="module">
+try{
+  const{OASISClient}=await import('https://esm.sh/@oasisomniverse/web4-api@2.0.2');
+  const oasis=new OASISClient({baseUrl:'https://api.web4.oasisomniverse.one',persistSession:true});
+  const nr=document.getElementById('nav-right');
+  const btn=document.createElement('button');
+  btn.style.cssText='font-family:"Share Tech Mono",monospace;font-size:10px;letter-spacing:.14em;padding:9px 18px;border-radius:6px;border:1px solid rgba(200,216,240,.3);background:transparent;color:#c8d8f0;cursor:pointer;transition:background .2s';
+  const sess=oasis.getSession();
+  const setLabel=s=>{btn.textContent=s?`⬡ ${s.username||'AVATAR'}`:'⬡ CONNECT AVATAR'};
+  setLabel(sess);
+  btn.addEventListener('click',async()=>{
+    if(oasis.getSession()){oasis.logout();setLabel(null);return;}
+    try{const s=await oasis.loginWithSelector();setLabel(s);}catch{}
+  });
+  nr.insertBefore(btn,nr.firstChild);
+}catch{}
+</script>
+
+<script>
+(function(){
+  const c=document.getElementById('starfield');
+  const ctx=c.getContext('2d');
+  let W,H,stars=[];
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;stars=Array.from({length:170},()=>({
+    x:Math.random()*W,y:Math.random()*H,
+    r:Math.random()*1.4+.3,
+    o:Math.random()*.65+.1,
+    s:Math.random()*.01+.003,
+    silver:Math.random()<.2,
+    gold:Math.random()<.06
+  }))}
+  window.addEventListener('resize',resize);resize();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.o+=s.s*(s.d=s.d||1);
+      if(s.o>.85||s.o<.08)s.d*=-1;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=s.gold?`rgba(240,200,64,${s.o})`:s.silver?`rgba(200,220,255,${s.o})`:`rgba(160,190,230,${s.o})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+(function(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>
